@@ -1,0 +1,10 @@
+---
+- name: Check for python version
+  command: "python{{ '.'.join(python__version.split('.')[:2]) }} --version"
+  register: python_version_registered
+  ignore_errors: yes
+
+- name: Import install_python
+  import_tasks: "install_python.yml"
+  when: python_version_registered.rc == 2 or python__force_install
+

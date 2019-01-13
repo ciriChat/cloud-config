@@ -1,0 +1,23 @@
+---
+- name: Install requirements
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - software-properties-common
+
+- name: Add repo
+  apt_repository:
+    repo: 'ppa:git-core/ppa'
+
+- name: Run script
+  shell: "curl -s https://packagecloud.io/install/repositories/github/git_lfs/script.deb.sh | bash"
+
+- name: Install git_lfs package
+  package:
+    name: git_lfs
+    state: present
+
+- name: Install
+  command: "git lfs install"
+

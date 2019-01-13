@@ -1,0 +1,15 @@
+---
+- name: Install nltk
+  pip:
+    name: nltk
+    executable: pip
+
+- name: Download nltk data
+  command: python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
+
+- name: Get chatbot from repo
+  git:
+    repo: '{{ chatbot_nmt__repo }}'
+    dest: "{{ chatbot_nmt__path }}"
+    version: dev
+    force: true

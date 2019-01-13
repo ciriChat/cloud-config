@@ -1,0 +1,3 @@
+---
+chatbot_nmt__repo: "https://github.com/ciriChat/generative-chatbot.git"
+chatbot_nmt__path: "/root/generative_chatbot"

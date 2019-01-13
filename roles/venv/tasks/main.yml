@@ -1,0 +1,15 @@
+---
+- name: Install requirements
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3-dev
+    - virtualenv
+
+- name: Create virtualenv with requirements
+  pip:
+    name: "{{ venv__requirements }}"
+    virtualenv: "{{ venv__path }}"
+    virtualenv_python: "{{ venv__python}}"
+

@@ -1,0 +1,28 @@
+---
+
+- name: Create config file
+  template:
+    src: "gunicorn.cfg"
+    dest: "{{ item.dirpath }}/gunicorn.cfg"
+  loop: "{{ gunicorn__apps }}"
+
+- name: Install gunicorn in venv
+  pip:
+    name: "gunicorn"
+    virtualenv: "{{ gunicorn__venv_path }}"
+
+- name: Run app
+  gunicorn:
+    app: "{{ item.name }}:app"
+    chdir: "{{ item.dirpath }}"
+    conf: "{{ item.dirpath }}/gunicorn.cfg"
+    pid: "{{ item.dirpath }}/gunicorn.pid"
+    venv: "{{ gunicorn__venv_path }}"
+  loop: "{{ gunicorn__apps }}"
+
+- name: reload files
+  shell: "kill -HUP $(cat gunicorn.pid)"
+  args:
+    chdir: "{{ item.dirpath }}"
+  loop: "{{ gunicorn__apps }}"
+

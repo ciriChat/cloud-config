@@ -1,0 +1,18 @@
+{% macro server(server) -%}
+    server{
+
+    {% for _listen in server.listen %}
+        listen {{ _listen }};
+    {% endfor %}
+
+    {% for _include in server.include %}
+        include {{ _include }};
+    {% endfor %}
+
+    {% for _location in server.locations %}
+        location {{ _location.location }} {
+            include {{ _location.include }};
+            proxy_pass {{ _location.proxy_pass }};
+        }
+    {% endfor %}
+{%- endmacro %}

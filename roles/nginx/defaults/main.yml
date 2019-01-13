@@ -1,0 +1,20 @@
+---
+nginx__package_name: nginx
+nginx__vhost_available_dirpath: /etc/nginx/sites-available
+nginx__vhost_enabled_dirpath: /etc/nginx/sites-enabled
+nginx__snippets_dirpath: /etc/nginx/snippets
+nginx__add_certificate: !!null
+nginx__vhosts: []
+#  - name: "chatbot"
+#    listen:
+#      - "80"
+#      - "443 ssl"
+#    include:
+#      - "snippets/self-signed.conf"
+#    locations:
+#      - location: "/question"
+#        include: "proxy_params"
+#        proxy_pass: "http://localhost:5000"
+#      - location: "/pl"
+#        include: "proxy_params"
+#        proxy_pass: "http://localhost:5001"

@@ -1,0 +1,3 @@
+[chatbot_nmt]
+chatbot_nmt_en ansible_host=192.168.1.171 ansible_user=root ansible_python_interpreter=/usr/bin/python3
+chatbot_nmt_pl ansible_host=192.168.1.172 ansible_user=root ansible_python_interpreter=/usr/bin/python3

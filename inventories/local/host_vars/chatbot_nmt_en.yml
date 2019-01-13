@@ -1,0 +1,13 @@
+#nginx__vhosts:
+#  - name: "chatbot"
+#    listen:
+#      - "[::]:80"
+#      - "[::]:443 ssl"
+#    include:
+#      - "snippets/self-signed.conf"
+#    locations:
+#      - location: "/en"
+#        include: "proxy_params"
+#        proxy_pass: "http://localhost:5000"
+
+nginx__add_certificate:  true

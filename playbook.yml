@@ -1,0 +1,17 @@
+---
+#define own hosts in production inventory#
+
+- name: Configure chatbot infrastructure
+  hosts: chatbot_nmt
+  roles:
+  - python3
+  - pip3
+  - nginx
+  - venv
+  - git_lfs
+
+- name: Deploy chatbot
+  hosts: chatbot_nmt
+  roles:
+  - chatbot_nmt
+  - gunicorn

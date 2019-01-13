@@ -1,0 +1,13 @@
+#nginx__vhosts:
+#  - name: "chatbot_pl"
+#    listen:
+#      - "[::]:80"
+#      - "[::]:443 ssl"
+#    include:
+#      - "snippets/self-signed.conf"
+#    locations:
+#      - location: "/pl"
+#        include: "proxy_params"
+#        proxy_pass: "http://localhost:5001"
+
+nginx__add_certificate:  true

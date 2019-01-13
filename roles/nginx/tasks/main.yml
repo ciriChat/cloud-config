@@ -1,0 +1,26 @@
+
+  # roles/nginx/tasks/main.yml
+  ---
+  - name: Ensure nginx is installed
+    package:
+      name: "{{ nginx__package_name }}"
+      state: present
+
+  - name: Import certificate config
+    import_tasks: certificate.yml
+    notify:
+      - reload nginx
+    when: nginx__add_certificate
+
+  - name: Import vhost config
+    import_tasks: vhost.yml
+    notify:
+      - reload nginx
+
+  - name: Ensure nginx is started and enabled to start at boot
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+
+

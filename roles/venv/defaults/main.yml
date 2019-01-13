@@ -1,0 +1,9 @@
+---
+venv__python: "python3.6"
+venv__path: "/root/nmtvenv"
+venv__requirements:
+  - tensorflow
+  - flask
+  - nltk
+  - python-Levenshtein
+

@@ -1,0 +1,22 @@
+
+- name: Install libs
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ python__libs }}"
+
+- name: Get and unzip python
+  unarchive:
+    src: "{{ python_url }}"
+    dest: "~/"
+    remote_src: True
+
+- name: Configure python
+  shell: "./configure --enable-optimizations --with-ensurepip=install"
+  args:
+    chdir: "~/Python-{{ python__version }}"
+
+- name: Install python
+  shell: "make -j8 && make altinstall"
+  args:
+    chdir: "~/Python-{{ python__version }}"

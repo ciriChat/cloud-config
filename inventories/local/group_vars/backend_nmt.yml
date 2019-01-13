@@ -1,0 +1,24 @@
+nginx__vhosts:
+  - name: "chatbot"
+    listen:
+      - "[::]:80"
+      - "[::]:443 ssl"
+    include:
+      - "snippets/self-signed.conf"
+    locations:
+      - location: "/en"
+        include: "proxy_params"
+        proxy_pass: "http://localhost:5000"
+      - location: "/pl"
+        include: "proxy_params"
+        proxy_pass: "http://localhost:5001"
+
+nginx__add_certificate:  true
+
+gunicorn__apps:
+  - dirpath: "/root/generative_chatbot_en"
+    name: "nmt_app"
+    bind: '127.0.0.1:5000'
+  - dirpath: "/root/generative_chatbot_pl"
+    name: "nmt_app"
+    bind: '127.0.0.1:5001'

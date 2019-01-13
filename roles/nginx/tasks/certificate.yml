@@ -1,0 +1,53 @@
+
+  # roles/nginx/tasks/certificate.yml
+  ---
+  - name: Ensure Pip is installed.
+    package:
+      name: "python-pip"
+      state: present
+
+  - name: Install pyOpenSSL
+    pip:
+      name: "pyOpenSSL"
+      state: present
+
+  - name: Make sure snippets dir exists
+    file:
+      path: "{{ nginx__snippets_dirpath }}"
+      state: directory
+      owner: www-data
+      group: www-data
+      mode: 0644
+
+  - name: Ensure certs directory exists
+    file:
+      path: /etc/ssl/certs
+      state: directory
+      owner: www-data
+      group: www-data
+      mode: 0644
+
+  - name: Generate an OpenSSL private key.
+    openssl_privatekey:
+      path: /etc/ssl/private/nginx-selfsigned.key
+
+  - name: Generate an OpenSSL CSR.
+    openssl_csr:
+      path: /etc/ssl/certs/nginx-selfsigned.csr
+      privatekey_path: /etc/ssl/private/nginx-selfsigned.key
+
+  - name: Generate a Self Signed OpenSSL certificate
+    openssl_certificate:
+      path: /etc/ssl/certs/nginx-selfsigned.crt
+      privatekey_path: /etc/ssl/private/nginx-selfsigned.key
+      csr_path: /etc/ssl/certs/nginx-selfsigned.csr
+      provider: selfsigned
+
+  - name: Add self-signed snippet
+    template:
+      src: "self-signed.conf"
+      dest: "{{ nginx__snippets_dirpath }}/self-signed.conf"
+      owner: www-data
+      group: www-data
+      mode: 0644
+

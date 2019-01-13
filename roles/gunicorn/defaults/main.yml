@@ -1,0 +1,10 @@
+---
+gunicorn__venv_path: "/root/nmtvenv"
+
+gunicorn__apps: []
+#  - dirpath: "/root/eng_chatbot/nmt"
+#    name: "nmt_app"
+#    bind: '127.0.0.1:5000'
+#  - dirpath: "/root/pl_chatbot/nmt"
+#    name: "nmt_app"
+#    bind: '127.0.0.1:5001'

@@ -1,0 +1,41 @@
+
+  # roles/nginx/tasks/vhost.yml
+  ---
+  - name: Ensure nginx vhost dirs exists
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: www-data
+      group: www-data
+      mode: 0644
+    loop:
+       - "{{ nginx__vhost_available_dirpath }}"
+       - "{{ nginx__vhost_enabled_dirpath }}"
+
+  - name: Disable default vhost
+    file:
+      path: "{{ nginx__vhost_enabled_dirpath }}/default"
+      state: absent
+
+  - name: Add vhost config files
+    template:
+      src: "vhost.conf"
+      dest: "{{ nginx__vhost_available_dirpath }}/{{ item.name }}"
+      owner: www-data
+      group: www-data
+      mode: 0644
+    loop: "{{ nginx__vhosts }}"
+
+
+  - name: Enable sites
+    file:
+      src: "{{ nginx__vhost_available_dirpath }}/{{ item.name }}"
+      dest: "{{ nginx__vhost_enabled_dirpath }}/{{ item.name }}"
+      owner: www-data
+      group: www-data
+      mode: 0644
+      state: link
+    loop: "{{ nginx__vhosts }}"
+    notify:
+      - restart nginx
+

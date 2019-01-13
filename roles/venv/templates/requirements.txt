@@ -1,0 +1,5 @@
+tensorflow
+flask
+nltk
+python-Levenshtein
+gunicorn
